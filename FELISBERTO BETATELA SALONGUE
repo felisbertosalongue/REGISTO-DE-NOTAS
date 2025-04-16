@@ -1,0 +1,54 @@
+#dicionário para armazenar os dados dos estudantes
+registos = {}
+
+#contadores e variáveis auxiliares
+maior_media = -1
+melhor_estudante = ""
+estudantes_com_nota_abaixo_5 = 0
+
+#recolher número de estudantes
+num_estudantes = int(input("introduzir numero de estudantes: "))
+
+for i in range(1, num_estudantes + 1):
+    print(f"\n--- Estudante {i} ---")
+    nome = input("Nome do estudante: ")
+    num_disciplinas = int(input(f"quantas disciplinas para {nome}? "))
+
+    notas = []
+    tem_nota_abaixo_5 = False
+
+    for j in range(1, num_disciplinas + 1):
+        nota = float(input(f"Nota {j}: "))
+        notas.append(nota)
+
+        if nota < 5:
+            tem_nota_abaixo_5 = True
+
+    registos[nome] = notas
+
+    #calcular média do estudante
+    media = sum(notas) / len(notas)
+
+    if media > maior_media:
+        maior_media = media
+        melhor_estudante = nome
+
+    if tem_nota_abaixo_5:
+        estudantes_com_nota_abaixo_5 += 1
+
+#mostrar registo final
+
+print("\n--- REGISTO FINAL ---")
+for nome, notas in registos.items():
+    print(f"{nome}: {notas}")
+
+#desafios extra
+print("\n--- ANÁLISE ---")
+
+for nome, notas in registos.items():
+    media = sum(notas) / len(notas)
+    status = "✅ Aprovado" if media >= 10 else "❌ Reprovado"
+    print(f"{nome} - Média: {media:.2f} ({status})")
+
+print(f"\nEstudantes com pelo menos uma nota abaixo de 5: {estudantes_com_nota_abaixo_5}")
+print(f"Estudante com a maior média: {melhor_estudante} ({maior_media:.2f})")
